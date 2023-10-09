@@ -13,6 +13,8 @@ Route::middleware('auth')->group(function () {
     // task
     Route::post('/habits/{habit}/tasks', [HabitTaskController::class, 'store'])
                                                                                 ->name('tasks.store');
+    Route::patch('/habits/{habit}/tasks/{task}', [HabitTaskController::class, 'update'])
+                                                                                    ->name('tasks.update');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

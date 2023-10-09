@@ -8,6 +8,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/habit-delete.js',
+                'resources/js/task-update.js',
             ],
             refresh: true,
         }),

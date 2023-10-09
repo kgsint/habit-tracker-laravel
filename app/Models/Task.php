@@ -12,6 +12,10 @@ class Task extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'is_complete' => 'boolean',
+    ];
+
     public function habit(): BelongsTo
     {
         return $this->belongsTo(Habit::class);

@@ -26,3 +26,13 @@ document.querySelectorAll('#delete-btn').forEach(btn => {
         })
     })
 })
+
+const flashMessageEl = document.querySelector('#flash-message')
+
+// check if it's in DOM or not
+if(flashMessageEl) {
+    // hide flash message after 2s
+    setTimeout(() => {
+        flashMessageEl.classList.add('hidden')
+    }, 2000)
+}

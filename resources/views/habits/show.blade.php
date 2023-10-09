@@ -1,4 +1,5 @@
 <x-app-layout>
+    {{-- header --}}
     <header class="mt-3">
         <a
         href="/"
@@ -7,7 +8,7 @@
         Go back
         </a>
 
-        <div class="flex justify-between mb-3 bg-gray-100 dark:bg-gray-800  p-3 rounded-lg">
+        <div class="flex justify-between bg-white mb-3 dark:bg-gray-800 p-3 rounded-lg">
             <h5 class="text-gray-500 dark:text-gray-300">
                 <a href="{{ route('habits.index') }}" class="hover:underline">Home</a> / {{ $habit->title }}
             </h5>
@@ -24,28 +25,49 @@
     </header>
 
 
+    {{-- main --}}
     <main>
         <div class="flex flex-col md:flex-row gap-4">
             <div class="md:w-3/4">
 
-                {{-- TODO - implemet tasks --}}
                 <div class="mb-6">
-                    <h2 class="text-gray-600 mb-1">Tasks</h2>
-
                     {{-- add task --}}
-                    <div class="card">
+                    <h3 class="text-gray-600 mb-1">Add task</h3>
+                    <div class="card mb-3">
                         <form action="{{ route('tasks.store', $habit->id) }}" method="POST">
                             @csrf
-
-                            <input
+                            <x-tasks.input
                             type="text"
                             placeholder="Click Enter to add a task to track"
                             name="body"
-                            class="w-full focus-visible:border-b-2 outline-none focus-visible:border-blue-300 dark:text-white dark:bg-black"
                             autocomplete="off"
                             />
                         </form>
                     </div>
+
+                    {{-- tasks --}}
+                    @if (count($incompletedTasks))
+                        <h2 class="text-gray-600 font-medium mb-1">Tasks</h2>
+                        @foreach ($incompletedTasks as $task)
+
+                            <div class="card mb-5">
+                                <x-tasks.form :habit="$habit" :task="$task" />
+                            </div>
+                        @endforeach
+                    @endif
+
+                    {{-- completed tasks --}}
+                    @if (count($completedTasks))
+                        <h2 class="text-gray-600 font-medium mb-1">Completed</h2>
+                        @foreach ($completedTasks as $task)
+
+                            <div class="card mb-5">
+                                <x-tasks.form :habit="$habit" :task="$task" />
+                            </div>
+                        @endforeach
+                    @endif
+
+
 
                 </div>
 
@@ -77,5 +99,5 @@
         </div>
     </main>
 
-    @vite(['resources/js/habit-delete.js'])
+    @vite(['resources/js/habit-delete.js', 'resources/js/task-update.js'])
 </x-app-layout>

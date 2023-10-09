@@ -32,7 +32,10 @@ class HabitController extends Controller
 
     public function show(Habit $habit)
     {
-        return view('habits.show', compact('habit'));
+        $completedTasks = $habit->tasks()->where('is_complete', true)->get();
+        $incompletedTasks = $habit->tasks()->where('is_complete', false)->get();
+
+        return view('habits.show', compact('habit', 'completedTasks', 'incompletedTasks'));
     }
 
     public function edit(Habit $habit)
@@ -49,8 +52,10 @@ class HabitController extends Controller
 
     public function destroy(Habit $habit)
     {
+        $title = $habit->title;
+
         $habit->delete();
 
-        return redirect()->route('habits.index');
+        return redirect()->route('habits.index')->with('status', "{$title} has been deleted");
     }
 }
