@@ -34,7 +34,7 @@
 
                     {{-- add task --}}
                     <div class="card">
-                        <form action="/" method="POST">
+                        <form action="{{ route('tasks.store', $habit->id) }}" method="POST">
                             @csrf
 
                             <input
