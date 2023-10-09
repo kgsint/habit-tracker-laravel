@@ -6,12 +6,13 @@
     method="POST"
 >
     @csrf
+    @method('PATCH')
+
     <div class="flex justify-between space-x-1">
         <x-tasks.input
             name="body"
             :completed="$task->is_complete"
             :body="$task->body"
-            {{-- :disabled="$task->is_complete" --}}
         />
         <x-tasks.checkbox
             name="is_complete"

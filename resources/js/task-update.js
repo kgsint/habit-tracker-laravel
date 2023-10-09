@@ -7,8 +7,8 @@ document.querySelectorAll('#task-checkbox').forEach(checkbox => {
 
         const data = Object.fromEntries(formData.entries())
 
-        // request with axios
-        axios.patch(form.action, data)
+        // form has @method('PATCH) => _method="PATCH"  so it's typically patch request,
+        axios.post(form.action, data)
 
         location.reload()
     })
