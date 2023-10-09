@@ -6,6 +6,7 @@ use App\Http\Requests\StoreHabitRequest;
 use App\Http\Requests\UpdateHabitRequest;
 use App\Models\Habit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class HabitController extends Controller
 {
@@ -32,6 +33,9 @@ class HabitController extends Controller
 
     public function show(Habit $habit)
     {
+        // ‌authorization
+        $this->authorize('view', $habit);
+
         $completedTasks = $habit->tasks()->where('is_complete', true)->get();
         $incompletedTasks = $habit->tasks()->where('is_complete', false)->get();
 
@@ -40,11 +44,17 @@ class HabitController extends Controller
 
     public function edit(Habit $habit)
     {
+         // ‌authorization
+         $this->authorize('update', $habit);
+
         return view('habits.edit', compact('habit'));
     }
 
     public function update(UpdateHabitRequest $request, Habit $habit)
     {
+         // ‌authorization
+         $this->authorize('update', $habit);
+
         $habit->update($request->validated());
 
         return redirect(route('habits.show', $habit->id));
@@ -52,10 +62,16 @@ class HabitController extends Controller
 
     public function destroy(Habit $habit)
     {
+         // ‌authorization
+        if(Gate::denies('delete', $habit)) {
+            return abort(403);
+        }
+
         $title = $habit->title;
 
         $habit->delete();
 
-        return redirect()->route('habits.index')->with('status', "{$title} has been deleted");
+        session()->flash('status', "{$title} has been deleted");
+        return response()->json(200);
     }
 }

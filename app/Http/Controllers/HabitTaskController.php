@@ -10,6 +10,9 @@ class HabitTaskController extends Controller
 {
     public function store(Request $request, Habit $habit)
     {
+        // ‌authorization
+        $this->authorize('manage', $habit);
+
         // validate
         $request->validate([
             'body' => 'required|string'
@@ -22,6 +25,9 @@ class HabitTaskController extends Controller
 
     public function update(Request $request, Habit $habit, Task $task)
     {
+         // ‌authorization
+         $this->authorize('manage', $habit);
+
         // if body has no text, delete task
         if(!$request->body || strlen($request->body) === 0) {
             $task->delete();

@@ -19,9 +19,12 @@ document.querySelectorAll('#delete-btn').forEach(btn => {
             // delete if confirmed
           if (result.isConfirmed) {
             // delete request
-            axios.delete(`/habits/${habit.id}`)
+            axios.delete(`/habits/${habit.id}`).then(res => {
+                if(res.status === 200) {
+                    location.href = "/"
+                }
+            })
 
-            location.href = "/"
           }
         })
     })
