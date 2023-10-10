@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Habit;
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +16,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory()->create([
+            'name' => 'kgsint',
+            'email' => 'kgsint@co.uk',
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        ]);
+
+        User::factory()->create([
+            'name' => 'someone',
+            'email' => 'someone@gmail.com',
+        ]);
+
+        User::factory()->create();
+
+
+        Habit::factory(10)->create();
+        Task::factory()->create();
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Habit;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class UpdateHabitRequest extends FormRequest
 {
@@ -11,7 +13,9 @@ class UpdateHabitRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $habit = Habit::find($this->route('habit'));
+
+        return Gate::allows('update', $habit);
     }
 
     /**

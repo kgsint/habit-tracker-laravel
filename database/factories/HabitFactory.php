@@ -17,7 +17,9 @@ class HabitFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->title,
+            'description' => $this->faker->sentence(10),
+            'user_id' => rand(1,3)
         ];
     }
 }
