@@ -12,7 +12,13 @@ Route::prefix('/v1')->group(function() {
 
     Route::middleware('auth:sanctum')->group(function() {
         Route::post('/logout', [AuthController::class, 'logout']);
-        Route::apiResource('habits', HabitController::class);
+        Route::apiResource('habits', HabitController::class)->names([
+            'index' => 'habits.api.index',
+            'show' => 'habits.api.show',
+            'store' => 'habits.api.store',
+            'update' => 'habits.api.update',
+            'destroy' => 'habits.api.destroy',
+        ]);
     });
 });
 
