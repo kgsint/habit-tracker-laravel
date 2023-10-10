@@ -8,8 +8,11 @@ document.querySelectorAll('#task-checkbox').forEach(checkbox => {
         const data = Object.fromEntries(formData.entries())
 
         // form has @method('PATCH) => _method="PATCH"  so it's typically patch request,
-        axios.post(form.action, data)
+        axios.post(form.action, data).then(res => {
+            if(res.status === 200) {
+                location.reload()
+            }
+        })
 
-        location.reload()
     })
 })

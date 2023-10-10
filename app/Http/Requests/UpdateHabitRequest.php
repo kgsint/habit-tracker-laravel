@@ -13,9 +13,7 @@ class UpdateHabitRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $habit = Habit::find($this->route('habit'));
-
-        return Gate::allows('update', $habit);
+        return true;
     }
 
     /**

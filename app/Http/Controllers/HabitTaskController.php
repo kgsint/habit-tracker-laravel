@@ -52,7 +52,7 @@ class HabitTaskController extends Controller
             ]);
         }
 
-        return redirect()->route('habits.show', $habit->id);
+        return response()->json(['message' => 'task updated'], status:200);
 
     }
 
