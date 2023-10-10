@@ -14,7 +14,7 @@
     </header>
         {{-- flash message --}}
         @if (session('status'))
-        <div id="flash-message" class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+        <div id="flash-message" class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-200 dark:bg-gray-800 dark:text-blue-400" role="alert">
                 {{ session('status') }}
           </div>
         @endif
