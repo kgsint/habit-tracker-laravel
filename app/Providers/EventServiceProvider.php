@@ -2,13 +2,14 @@
 
 namespace App\Providers;
 
-use App\Models\Habit;
 use App\Models\Task;
+use App\Models\Habit;
 use App\Observers\HabitObserver;
+use App\Observers\HabitTaskObserver;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,7 +28,7 @@ class EventServiceProvider extends ServiceProvider
     {
         // register observers
         Habit::observe(HabitObserver::class);
-        Task::observe(HabitObserver::class);
+        Task::observe(HabitTaskObserver::class);
     }
 
     /**

@@ -46,9 +46,22 @@ class HabitTaskController extends Controller
             $task->update([
                 'is_complete' => true,
             ]);
+            // track activity
+            $task->activities()->create([
+                'habit_id' => $task->habit->id,
+                'user_id' => auth()->id(),
+                'description' => 'completed_task'
+            ]);
         }else {
             $task->update([
                 'is_complete' => false,
+            ]);
+
+            // track activity
+            $task->activities()->create([
+                'habit_id' => $task->habit->id,
+                'user_id' => auth()->id(),
+                'description' => 'incompleted_task'
             ]);
         }
 

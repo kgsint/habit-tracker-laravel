@@ -26,7 +26,7 @@ class HabitObserver
          * array_diff_key returns a two-dimensional array from from first array which keys are not present in other array(s)
          * array_diff returns a two-dimensional array from first array which values are not present in other array(s)
         */
-        $activity = $habit->activities()->create([
+         $habit->activities()->create([
             'description' => 'updated',
             'user_id' => $habit->user->id,
             'changes' => json_encode([
