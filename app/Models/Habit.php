@@ -22,4 +22,9 @@ class Habit extends Model
     {
         return $this->hasMany(Task::class)->latest();
     }
+
+    public function activities(): HasMany
+    {
+        return $this->hasMany(Activity::class);
+    }
 }
