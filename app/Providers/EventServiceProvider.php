@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Habit;
+use App\Models\Task;
+use App\Observers\HabitObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -20,12 +23,11 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
-    /**
-     * Register any events for your application.
-     */
     public function boot(): void
     {
-        //
+        // register observers
+        Habit::observe(HabitObserver::class);
+        Task::observe(HabitObserver::class);
     }
 
     /**
