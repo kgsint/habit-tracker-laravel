@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('habit_id')->constrained()->cascadeOnDelete();
             $table->nullableMorphs('subject'); // create 'subject_type' and 'subject_id'
             $table->text('description');
-            $table->text('changes')->nullable();
+            $table->json('changes')->nullable();
             $table->timestamps();
         });
     }

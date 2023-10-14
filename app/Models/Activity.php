@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Presenters\ActivityPresenter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -27,5 +28,11 @@ class Activity extends Model
     public function habit(): BelongsToMany
     {
         return $this->belongsToMany(Habit::class);
+    }
+
+    // presenter
+    public function presenter(): ActivityPresenter
+    {
+        return new ActivityPresenter($this);
     }
 }

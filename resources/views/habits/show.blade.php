@@ -95,6 +95,16 @@
 
                 </div>
 
+                {{-- activity log --}}
+                <div class="card mt-3">
+                    @foreach ($habit->activities as $activity)
+                        <div class="flex justify-between py-3 {{ !$loop->last ? 'border-b border-gray-400' : '' }}">
+                            <x-activities.log :activity="$activity"></x-activities.log>
+                            <span class="text-xs text-gray-400">{{ $activity->created_at->diffForHumans(null, true) }}</span>
+                        </div>
+                    @endforeach
+            </div>
+
             </div>
         </div>
     </main>
