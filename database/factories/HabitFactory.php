@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class HabitFactory extends Factory
         return [
             'title' => $this->faker->sentence(3),
             'description' => $this->faker->sentence(10),
-            'user_id' => rand(1,3)
+            'user_id' => User::factory()
         ];
     }
 }
