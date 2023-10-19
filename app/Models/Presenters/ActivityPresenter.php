@@ -23,11 +23,11 @@ class ActivityPresenter
 
         }
 
-
         return match($this->activity->description) {
             'created' => 'You created a habit',
             'updated' => $updatedHabitDesc,
-            'created_task' => "You created  '{$taskBody}'",
+            'created_task' => "You created a task called '{$taskBody}'",
+            'updated_task' => "You updated the text of the '{$taskBody}'",
             'completed_task' => "You completed '{$taskBody}'",
             'incompleted_task' => "You unchecked '{$taskBody}'",
             'deleted_task' => "You deleted {$taskBody}",

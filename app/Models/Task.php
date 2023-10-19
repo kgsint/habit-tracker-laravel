@@ -27,4 +27,31 @@ class Task extends Model
     {
         return $this->morphMany(Activity::class, 'subject');
     }
+
+    public function trackActivity(string $description): void
+    {
+        $this->activities()->create([
+            'user_id' => auth()->id(),
+            'habit_id' => $this->habit->id,
+            'description' => $description,
+        ]);
+    }
+
+    public function complete(): void
+    {
+        $this->update([
+            'is_complete' => true,
+        ]);
+
+        $this->trackActivity('completed_task');
+    }
+
+    public function inComplete(): void
+    {
+        $this->update([
+            'is_complete' => false,
+        ]);
+
+        $this->trackActivity('incompleted_task');
+    }
 }

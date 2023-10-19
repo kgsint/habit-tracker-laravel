@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 
 class HabitTaskController extends Controller
 {
+
     public function store(Request $request, Habit $habit)
     {
-        // ‌authorization
+        // authorize
         $this->authorize('manage', $habit);
 
         // validate
@@ -25,7 +26,7 @@ class HabitTaskController extends Controller
 
     public function update(Request $request, Habit $habit, Task $task)
     {
-         // ‌authorization
+         // authorize
          $this->authorize('manage', $habit);
 
         // if body has no text, delete task
@@ -35,38 +36,34 @@ class HabitTaskController extends Controller
             return redirect()->route('habits.show', $habit->id);
         }
 
-        // update if there is body,
-        $task->update([
-            'body' => $request->body
-        ]);
+        // update and save activity only if the previous state and current state aren't the same
+        if($request->body !== $task->body) {
+            // update if there is body,
+            $task->update([
+                'body' => $request->body
+            ]);
 
+            // track activity
+            $task->trackActivity('updated_task');
+
+            return response()->json(['message' => 'task updated'], status:200);
+        }
 
         // complete or incomplete task
-        if($request->is_complete) {
-            $task->update([
-                'is_complete' => true,
-            ]);
-            // track activity
-            $task->activities()->create([
-                'habit_id' => $task->habit->id,
-                'user_id' => auth()->id(),
-                'description' => 'completed_task'
-            ]);
-        }else {
-            $task->update([
-                'is_complete' => false,
-            ]);
-
-            // track activity
-            $task->activities()->create([
-                'habit_id' => $task->habit->id,
-                'user_id' => auth()->id(),
-                'description' => 'incompleted_task'
-            ]);
-        }
+        $this->completeOrIncomplete($request, $task);
 
         return response()->json(['message' => 'task updated'], status:200);
 
+    }
+
+    private function completeOrIncomplete(Request $request, Task $task)
+    {
+        // when the request has is_complete or the user is checked
+        if($request->is_complete) {
+            $task->complete();
+        }elseif(! $request->is_complete && $task->is_complete === true) { // uncheck only if the request has no is_complete
+            $task->inComplete();                                          // and the previous state of the task is true
+        }
     }
 
 }
