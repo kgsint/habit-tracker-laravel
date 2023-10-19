@@ -124,6 +124,7 @@ class HabitTest extends TestCase
         $response = $this->delete(route('habits.destroy', $habit->id));
 
         $response->assertStatus(200);
+        $this->assertModelMissing($habit);
     }
 
     // authrize delete
