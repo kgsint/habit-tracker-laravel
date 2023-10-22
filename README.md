@@ -4,6 +4,8 @@
 - Authentication 
 - Authorization 
 - CRUD operations
+- Activity Log
+- API routes and API(token-based) Authentication
 
 ## Installation and Setup
 
